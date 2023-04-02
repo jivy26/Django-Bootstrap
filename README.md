@@ -15,5 +15,7 @@ This is a Django website that includes a blog with a Bootstrap masonry grid post
 ### Step 1: Set up a Python virtual environment and install required packages
 
 #### Install Python and virtualenv:
-```sudo apt update```
-```sudo apt install python3 python3-venv```
+```
+sudo apt update
+sudo apt install python3 python3-venv
+``

@@ -16,4 +16,5 @@ This is a Django website that includes a blog with a Bootstrap masonry grid post
 
 #### Install Python and virtualenv:
 `sudo apt update`
+
 `sudo apt install python3 python3-venv`

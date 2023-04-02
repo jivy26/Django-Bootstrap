@@ -1,4 +1,4 @@
-# Website Scraper with Google Search and Dorking
+# Website Scraper utilizing Google Dorking on a self-hosted platform
 
 This is a PHP web application that can scrape any website using Python and the Google search engine with multiple dorking options. The application is built with PHP for the front-end, and Python for the back-end scraping and analysis. The Beautiful Soup library is used for web scraping, and the googlesearch-python library is used for Google search.
 

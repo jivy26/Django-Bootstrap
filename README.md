@@ -1,12 +1,6 @@
 # Django Bootstrap Blog
 
-Basic bootstrap blog, as I progress I will commit changes. Goal is to have a fully interactive and functional website.
-
-## Requirements
-
-- Ubuntu
-- PHP 7.0 or higher
-- Python 3.0 or higher
+This is a Django website that includes a blog with a Bootstrap masonry grid post and a customizable menu. The website is served using Gunicorn and Nginx, with Apache used to serve static files.
 
 ## Installation
 
@@ -17,3 +11,10 @@ Basic bootstrap blog, as I progress I will commit changes. Goal is to have a ful
 5. Set up Nginx as a reverse proxy for Gunicorn.
 6. Configure Apache to serve static files.
 7. Deploy the website.
+
+### Step 1: Set up a Python virtual environment and install required packages
+
+#### Install Python and virtualenv:
+`sudo apt update
+sudo apt install python3 python3-venv
+`

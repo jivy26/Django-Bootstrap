@@ -2,6 +2,14 @@
 
 This is a Django website that includes a blog with a Bootstrap masonry grid post and a customizable menu. The website is served using Gunicorn and Nginx, with Apache used to serve static files.
 
+## Working Example
+
+https://django.901cyber.dev/blog_posts/
+
+## Notes
+
+The instructions below are for setting up a subdomain for your Django website, `django.yoursite.com`. However, you can omit `django.` from the steps to point to your domain, without utilizing a sub-domain.
+
 ## Installation
 
 1. Set up a Python virtual environment and install required packages.
@@ -181,3 +189,93 @@ ExecStart=/path/to/your/virtualenv/bin/gunicorn --access-logfile - --workers 3 -
 [Install]
 WantedBy=multi-user.target
 ```
+
+#### Start and enable the Gunicorn service:
+```
+sudo systemctl start gunicorn
+sudo systemctl enable gunicorn
+```
+
+### Step 5: Set up Nginx as a reverse proxy for Gunicorn
+
+#### Install Nginx:
+```
+sudo apt install nginx
+```
+
+#### Create a new Nginx server block at /etc/nginx/sites-available/myproject:
+Replace django.example.com with your domain name and /path/to/your/project with the actual path to your Django project.
+```
+server {
+    listen 80;
+    server_name django.example.com;
+
+    location / {
+        proxy_pass http://unix:/path/to/your/project/myproject.sock;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+#### Create a symbolic link to enable the server block:
+```
+sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled/
+```
+
+#### Test the Nginx configuration and restart the service:
+```
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+### Step 6: Configure Apache to serve static files
+
+#### Install Apache:
+```
+sudo apt install apache2
+```
+
+#### Create a new Apache virtual host at /etc/apache2/sites-available/myproject.conf:
+Replace django.example.com with your domain name and /path/to/your/project with the actual path to your Django project.
+```
+<VirtualHost *:80>
+    ServerName django.example.com
+    ServerAdmin webmaster@example.com
+
+    Alias /static/ /path/to/your/project/static/
+
+    <Directory /path/to/your/project/static/>
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+
+#### Enable the virtual host and restart Apache:
+```
+sudo a2ensite myproject
+sudo systemctl restart apache2
+```
+
+### Step 7: Deploy the website
+
+#### Collect static files:
+```
+python manage.py collectstatic
+```
+
+#### Apply database migrations:
+```
+python manage.py migrate
+```
+
+#### Create a superuser for the Django admin site:
+```
+python manage.py createsuperuser
+```
+
+#### Point your domain's DNS records to your server's IP address.
+
+Now your Django website with a Bootstrap blog masonry grid post and a customizable menu should be up and running. Access the blog at http://django.example.com/blog_posts/ (replace django.example.com with your domain name).

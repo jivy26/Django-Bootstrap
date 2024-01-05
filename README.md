@@ -2,10 +2,6 @@
 
 This is a Django website that includes a blog with a Bootstrap masonry grid post and a customizable menu. The website is served using Gunicorn and Nginx, with Apache used to serve static files.
 
-## Working Example
-
-https://django.901cyber.dev/blog_posts/
-
 ## Notes
 
 The instructions below are for setting up a subdomain for your Django website, `django.yoursite.com`. However, you can omit `django.` from the steps to point to your domain, without utilizing a sub-domain.
